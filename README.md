@@ -1,2 +1,2 @@
 # training.vertica.services
-Training Vertica Backend Servie
+Training Vertica Backend Service
