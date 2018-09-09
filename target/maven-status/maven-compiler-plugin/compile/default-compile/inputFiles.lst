@@ -1,0 +1,6 @@
+/home/miguel/Proyectos/Formacion/Vertica/Sources/training.vertica.services/src/main/java/com/thingtrack/training/vertica/services/Application.java
+/home/miguel/Proyectos/Formacion/Vertica/Sources/training.vertica.services/src/main/java/com/thingtrack/training/vertica/services/controller/ProductController.java
+/home/miguel/Proyectos/Formacion/Vertica/Sources/training.vertica.services/src/main/java/com/thingtrack/training/vertica/services/config/SwaggerConfig.java
+/home/miguel/Proyectos/Formacion/Vertica/Sources/training.vertica.services/src/main/java/com/thingtrack/training/vertica/services/domain/Product.java
+/home/miguel/Proyectos/Formacion/Vertica/Sources/training.vertica.services/src/main/java/com/thingtrack/training/vertica/services/repository/ProductRepository.java
+/home/miguel/Proyectos/Formacion/Vertica/Sources/training.vertica.services/src/main/java/com/thingtrack/training/vertica/services/exception/ResourceNotFoundException.java

@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: com.thingtrack.training.vertica.services.ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 42.256 s <<< FAILURE! - in com.thingtrack.training.vertica.services.ApplicationTests
+contextLoads(com.thingtrack.training.vertica.services.ApplicationTests)  Time elapsed: 0.43 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is javax.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.SQLGrammarException: Unable to build DatabaseInformation
+Caused by: javax.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.SQLGrammarException: Unable to build DatabaseInformation
+Caused by: org.hibernate.exception.SQLGrammarException: Unable to build DatabaseInformation
+Caused by: java.sql.SQLSyntaxErrorException: [Vertica][VJDBC](4566) ERROR: Relation "pg_class" does not exist
+Caused by: com.vertica.support.exceptions.SyntaxErrorException: [Vertica][VJDBC](4566) ERROR: Relation "pg_class" does not exist
+
