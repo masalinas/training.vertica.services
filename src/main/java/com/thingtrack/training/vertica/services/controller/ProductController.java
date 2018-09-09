@@ -1,7 +1,8 @@
 package com.thingtrack.training.vertica.services.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,16 +33,26 @@ public class ProductController {
     ProductRepository productRepository;
 
     @GetMapping("/products")
-    @ApiOperation("Returns list of all Products in the system.")
+    @ApiOperation("Returns list of all Products in the system. (Killer procedure for Bigdata!)")
     public List<Product> getAllProducts() {
         List<Product> products = productRepository.findAll();
 
         return products;
     }
 
+    @GetMapping("/products/pages/{page}/{size}")
+    @ApiOperation("Returns list of all Pageable Products in the system.")
+    public List<Product> getAllPageableProducts(@PathVariable(value = "page") int page,
+    											@PathVariable(value = "size") int size) {
+        Page<Product> products = productRepository.findAll(PageRequest.of(page, size));
+
+        return products.getContent();
+    }
+    
     @GetMapping("/products/{key}/{version}")
     @ApiOperation("Returns a specific product by their Id (Key, Version). 404 if does not exist.")
-    public Product getProductById(@PathVariable(value = "key") Long productKey, @PathVariable(value = "version") Long productVersion) {
+    public Product getProductById(@PathVariable(value = "key") Long productKey, 
+    		                      @PathVariable(value = "version") Long productVersion) {
         return productRepository.findById(new ProductId(productKey, productVersion))
                .orElseThrow(() -> new ResourceNotFoundException("Product", "key", productKey));
     }
