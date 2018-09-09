@@ -32,18 +32,18 @@ public class ProductController {
     @Autowired
     ProductRepository productRepository;
 
-    @GetMapping("/products")
-    @ApiOperation("Returns list of all Products in the system. (Killer procedure for Bigdata!)")
+    /*@GetMapping("/products")
+    @ApiOperation("Returns list of all Products in the system. (Page 0)")
     public List<Product> getAllProducts() {
         List<Product> products = productRepository.findAll();
 
         return products;
-    }
+    }*/
 
-    @GetMapping("/products/pages/{page}/{size}")
-    @ApiOperation("Returns list of all Pageable Products in the system.")
-    public List<Product> getAllPageableProducts(@PathVariable(value = "page") int page,
-    											@PathVariable(value = "size") int size) {
+    @GetMapping("/products/page/{page}/{size}")
+    @ApiOperation("Returns list of all Product Pages in the system.")
+    public List<Product> getAllProducts(@PathVariable(value = "page") int page,
+    									@PathVariable(value = "size") int size) {
         Page<Product> products = productRepository.findAll(PageRequest.of(page, size));
 
         return products.getContent();
