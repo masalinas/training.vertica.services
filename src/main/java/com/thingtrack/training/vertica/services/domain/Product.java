@@ -5,8 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Id;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 
 import java.util.Date;
 import java.io.Serializable;
@@ -15,13 +15,10 @@ import java.io.Serializable;
 @Entity
 @Table(name = "product_dimension")
 @ApiModel(description = "Class representing a product.")
-public class Product implements Serializable {
-
-    @Id
-    @Column(name = "product_key")
-    @ApiModelProperty(notes = "Key of the product. No two products can have the same id version.", example = "1", required = true, position = 0)
-    private Long key;
-    
+public class Product implements Serializable {  
+	@EmbeddedId
+    private ProductId id;
+	
     @Column(name = "product_description", nullable = true)
     @ApiModelProperty(notes = "Description of the product.", example = "Brand #4 brandy", required = false, position = 1)
     private String description;
@@ -37,14 +34,15 @@ public class Product implements Serializable {
     public Product() {        
     }
 
-    public Product(String description, float price, boolean active, Date createdAt) {        
-        this.description = description;
+    public Product(ProductId id, String description, float price, boolean active, Date createdAt) {        
+        this.id = id;
+    	this.description = description;
         this.price = price;
         this.active = active;
     }
-
-    public Long getKey() {
-        return key;
+  
+    public ProductId getId() {
+        return id;
     }
     
     public String getDescription() {

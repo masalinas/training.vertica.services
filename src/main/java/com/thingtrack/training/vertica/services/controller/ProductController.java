@@ -20,6 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import com.thingtrack.training.vertica.services.domain.Product;
+import com.thingtrack.training.vertica.services.domain.ProductId;
 import com.thingtrack.training.vertica.services.exception.ResourceNotFoundException;
 import com.thingtrack.training.vertica.services.repository.ProductRepository;
 
@@ -38,26 +39,25 @@ public class ProductController {
         return products;
     }
 
-    @GetMapping("/products/{key}")
-    @ApiOperation("Returns a specific product by their Key. 404 if does not exist.")
-    public Product getProductById(@PathVariable(value = "key") Long productKey) {
-        return productRepository.findById(productKey)
+    @GetMapping("/products/{key}/{version}")
+    @ApiOperation("Returns a specific product by their Id (Key, Version). 404 if does not exist.")
+    public Product getProductById(@PathVariable(value = "key") Long productKey, @PathVariable(value = "version") Long productVersion) {
+        return productRepository.findById(new ProductId(productKey, productVersion))
                .orElseThrow(() -> new ResourceNotFoundException("Product", "key", productKey));
     }
-
+    
     @PostMapping("/products")
     @ApiOperation("Creates a new product.")
     public Product createProduct(@Valid @RequestBody Product product) {
         return productRepository.save(product);
     }
 
-    @PutMapping("/products/{id}")
-    @ApiOperation("Updates a product by Id from the system. 404 if the person's identifier is not found.")
-    public Product updateProduct(@PathVariable(value = "id") Long productId,
-                                 @Valid @RequestBody Product productDetails) {
+    @PutMapping("/products/{key}/{version}")
+    @ApiOperation("Updates a product by Id (Key, Version) from the system. 404 if the product's identifier is not found.")
+    public Product updateProduct(@Valid @RequestBody Product productDetails) {
 
-        Product product = productRepository.findById(productId)
-            .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));              
+        Product product = productRepository.findById(productDetails.getId())
+            .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productDetails.getId()));              
 
         product.setDescription(productDetails.getDescription());
         product.setPrice(productDetails.getPrice());
@@ -68,11 +68,12 @@ public class ProductController {
         return updatedProduct;
     }
 
-    @DeleteMapping("/products/{id}")
-    @ApiOperation("Deletes a product by Id from the system. 404 if the person's identifier is not found.")
-    public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long productId) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product", "id", productId));
+    @DeleteMapping("/products/{key}/{version}")
+    @ApiOperation("Deletes a product by Id (Key, Version) from the system. 404 if the product's identifier is not found.")
+    public ResponseEntity<?> deleteProduct(@PathVariable(value = "key") Long productKey,
+    									   @PathVariable(value = "version") Long productVersion) {
+        Product product = productRepository.findById(new ProductId(productKey, productVersion))
+                .orElseThrow(() -> new ResourceNotFoundException("Product", "id", new ProductId(productKey, productVersion)));
                 
         productRepository.delete(product);
 
