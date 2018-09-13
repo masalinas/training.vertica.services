@@ -40,7 +40,7 @@ public class ProductController {
         return products;
     }*/
 
-    @GetMapping("/products/page/{page}/{size}")
+    @GetMapping("/products/pages/{page}/{size}")
     @ApiOperation("Returns list of all Product Pages in the system.")
     public List<Product> getAllProducts(@PathVariable(value = "page") int page,
     									@PathVariable(value = "size") int size) {
