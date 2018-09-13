@@ -1,5 +1,5 @@
 # training.vertica.services
-Training Vertica Backend Service
+Training Vertica Backend Services
 
 # start spring boot app from shell
 cd target
